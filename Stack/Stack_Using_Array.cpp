@@ -23,6 +23,7 @@ int main(void)       //Driver function
         switch(option)
         {
             case 1:
+                cout << "Enter the element to be pushed in the stack: ";
                 cin >> element;
                 push_element(element);
                 break;

@@ -25,6 +25,7 @@ int main(void)       //Driver function
         switch(option)
         {
             case 1:
+                cout << "Enter the element to be inserted in the queue: ";
                 cin >> element;
                 insert_element(element);
                 break;
