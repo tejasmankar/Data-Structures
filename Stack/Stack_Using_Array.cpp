@@ -83,7 +83,7 @@ void top_element()       //Prints the topmost element of the stack
     }
 }
 
-void stack_size()         //Prints the current size of the stack using the pointer to the topmost elemnt of the stack
+void stack_size()         //Prints the current size of the stack using the pointer to the topmost element of the stack
 {
     cout << stack_top_index + 1 << "\n";
 }

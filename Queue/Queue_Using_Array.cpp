@@ -4,14 +4,15 @@ using namespace std;
 
 #define MAX_SIZE 100        //Defines the maximum number of elements which the queue can hold
 
-int stack_queue[MAX_SIZE];    //Array which will be used to implement the queue
+int queue_array[MAX_SIZE];    //Array which will be used to implement the queue
 int queue_front_index(-1);    //Pointer to the front element of the queue
-int queue_rear_index(0);      //Pointer to the rear element of the queue
+int queue_rear_index(-1);      //Pointer to the rear element of the queue
+//Initially, both the front and rear pointers are equal as the queue is empty.
 
-void push_element(int);
-void pop_element();
-void top_element();
-void stack_size();
+void insert_element(int);
+void remove_element();
+void front_element();
+void queue_size();
 void print_elements();
 
 int main(void)       //Driver function
@@ -19,22 +20,22 @@ int main(void)       //Driver function
     int option(0), element(0);
     do
     {
-        cout << "Select an appropriate option:\n1. Push element at the top of the stack \n2. Pop element from the stack\n3. Get the top element in the stack\n4. Size of the stack\n5. Print the elements in the stack\n6. Exit\n";
+        cout << "Select an appropriate option:\n1. Insert element in the queue \n2. Remove element from the queue\n3. Get the front element in the queue\n4. Size of the queue\n5. Print the elements in the queue\n6. Exit\n";
         cin >> option;
         switch(option)
         {
             case 1:
                 cin >> element;
-                push_element(element);
+                insert_element(element);
                 break;
             case 2:
-                pop_element();
+                remove_element();
                 break;
             case 3:
-                top_element();
+                front_element();
                 break;
             case 4:
-                stack_size();
+                queue_size();
                 break;
             case 5:
                 print_elements();
@@ -47,3 +48,61 @@ int main(void)       //Driver function
     return 0;
 }
 
+void insert_element(int element)       //Inserts the element at the end of the queue
+{
+    if(queue_rear_index < MAX_SIZE - 1)
+    {
+        queue_array[++queue_rear_index] = element;
+    }
+    else
+    {
+        cout << "Queue is full\n";
+    }
+}
+
+void remove_element()      //Removes the front element from the queue
+{
+    if(queue_rear_index - queue_front_index >= 1)
+    {
+        int temp = queue_array[queue_front_index];
+        queue_front_index++;
+    }
+    else
+    {
+        cout << "Queue is empty\n";
+    }
+}
+
+void front_element()       //Prints the front element of the queue
+{
+    if(queue_rear_index - queue_front_index >= 1)
+    {
+        cout << queue_array[queue_front_index] << "\n";
+    }
+    else
+    {
+        cout << "Queue is empty\n";
+    }
+}
+
+void queue_size()         //Prints the current size of the queue using the pointers to the front and rear elements of the queue
+{
+    cout << queue_rear_index - queue_front_index + 1 << "\n";
+}
+
+void print_elements()      //Prints all the elements currently present in the queue from the front to the rear
+{
+    int index(queue_front_index);
+    if(queue_rear_index - queue_front_index >= 1)
+    {
+        while(index <= queue_rear_index)
+        {
+            cout << queue_array[index++] << " ";
+        }
+        cout << "\n";
+    }
+    else
+    {
+        cout << "Queue is empty\n";
+    }
+}
