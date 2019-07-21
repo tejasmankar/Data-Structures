@@ -2,58 +2,71 @@
 #include<cstdlib>
 using namespace std;
 
-#define MAX_SIZE 100        //Defines the maximum number of elements which the queue can hold
+#define MAX_SIZE 5        //Defines the maximum number of elements which the queue can hold
 
-int queue_array[MAX_SIZE];    //Array which will be used to implement the queue
-int queue_front_index(-1);    //Pointer to the front element of the queue
-int queue_rear_index(-1);      //Pointer to the rear element of the queue
-//Initially, both the front and rear pointers are equal as the queue is empty.
+int queue_array[MAX_SIZE];   //Array which will be used to implement the queue
+int queue_front_index(0);    //Pointer to the front element of the queue
+int queue_rear_index(0);     //Pointer to the location following the rear element of the queue
 
-void insert_element(int);
-void remove_element();
+//In this queue, we will insert elements at the front of the array if there is space after removal of some elements
+//and no element can be added at the end of the array.
+//Insertion and removal of elements from the queue will happen in a circular fashion.
+//In this implementation, in a queue of size MAX_SIZE, we will add only MAX_SIZE-1 elements because
+//otherwise there would be ambiguity when the queue is either full or empty, as in both the cases
+//queue_front_index = queue_rear_index
+
+void enqueue(int);
+void dequeue();
 void front_element();
-void queue_size();
+void rear_element();
+int queue_size();
 void print_elements();
 
-int main(void)       //Driver function
+//Driver function
+int main(void)
 {
     int option(0), element(0);
     do
     {
-        cout << "Select an appropriate option:\n1. Insert element in the queue \n2. Remove element from the queue\n3. Get the front element in the queue\n4. Size of the queue\n5. Print the elements in the queue\n6. Exit\n";
+        cout << "Select an appropriate option:\n1. Insert element in the queue \n2. Remove element from the queue\n3. Get the front element of the queue\n4. Get the rear element of the queue\n5. Size of the queue\n6. Print the elements in the queue\n7. Exit\n";
         cin >> option;
         switch(option)
         {
             case 1:
                 cout << "Enter the element to be inserted in the queue: ";
                 cin >> element;
-                insert_element(element);
+                enqueue(element);
                 break;
             case 2:
-                remove_element();
+                dequeue();
                 break;
             case 3:
                 front_element();
                 break;
             case 4:
-                queue_size();
+                rear_element();
                 break;
             case 5:
-                print_elements();
+                cout << queue_size() << "\n";
                 break;
             case 6:
+                print_elements();
+                break;
+            case 7:
                 exit(0);
                 break;
         }
-    }while(option != 6);
+    }while(option != 7);
     return 0;
 }
 
-void insert_element(int element)       //Inserts the element at the end of the queue
+//Inserts the element at the end of the queue
+void enqueue(int element)
 {
-    if(queue_rear_index < MAX_SIZE - 1)
+    if((queue_rear_index + 1) % MAX_SIZE != queue_front_index)
     {
-        queue_array[++queue_rear_index] = element;
+        queue_array[(queue_rear_index) % MAX_SIZE] = element;
+        queue_rear_index = (queue_rear_index + 1) % MAX_SIZE;
     }
     else
     {
@@ -61,12 +74,13 @@ void insert_element(int element)       //Inserts the element at the end of the q
     }
 }
 
-void remove_element()      //Removes the front element from the queue
+//Removes the front element from the queue
+void dequeue()
 {
-    if(queue_rear_index - queue_front_index >= 1)
+    if(queue_front_index != queue_rear_index)
     {
         int temp = queue_array[queue_front_index];
-        queue_front_index++;
+        queue_front_index = (queue_front_index + 1) % MAX_SIZE;
     }
     else
     {
@@ -74,9 +88,10 @@ void remove_element()      //Removes the front element from the queue
     }
 }
 
-void front_element()       //Prints the front element of the queue
+//Prints the front element of the queue
+void front_element()
 {
-    if(queue_rear_index - queue_front_index >= 1)
+    if(queue_size())
     {
         cout << queue_array[queue_front_index] << "\n";
     }
@@ -86,19 +101,45 @@ void front_element()       //Prints the front element of the queue
     }
 }
 
-void queue_size()         //Prints the current size of the queue using the pointers to the front and rear elements of the queue
+//Prints the rear element of the queue
+void rear_element()
 {
-    cout << queue_rear_index - queue_front_index + 1 << "\n";
+    if(queue_size())
+    {
+        cout << queue_array[(queue_rear_index + MAX_SIZE - 1) % MAX_SIZE] << "\n";
+        //The rear element index is (queue_rear_index + MAX_SIZE - 1) % MAX_SIZE and not
+        //queue_rear_index - 1 as the index value would be negative when queue_rear_index is 0
+    }
+    else
+    {
+        cout << "Queue is empty\n";
+    }
 }
 
-void print_elements()      //Prints all the elements currently present in the queue from the front to the rear
+//Returns the current size of the queue using the pointers to the front and rear elements of the queue
+int queue_size()
 {
-    int index(queue_front_index);
-    if(queue_rear_index - queue_front_index >= 1)
+    if(queue_front_index == queue_rear_index)
     {
-        while(index <= queue_rear_index)
+        return 0;
+    }
+    else if(queue_rear_index > queue_front_index)
+    {
+        return queue_rear_index - queue_front_index;
+    }
+    return MAX_SIZE - queue_front_index + queue_rear_index;
+}
+
+//Prints all the elements currently present in the queue from the front to the rear
+void print_elements()
+{
+    int index(queue_front_index), length(queue_size());
+    if(length)
+    {
+        while(length--)
         {
-            cout << queue_array[index++] << " ";
+            cout << queue_array[index] << " ";
+            index = (index + 1) % MAX_SIZE;
         }
         cout << "\n";
     }

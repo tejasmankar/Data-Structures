@@ -13,7 +13,8 @@ void top_element();
 void stack_size();
 void print_elements();
 
-int main(void)       //Driver function
+//Driver function
+int main(void)
 {
     int option(0), element(0);
     do
@@ -23,7 +24,7 @@ int main(void)       //Driver function
         switch(option)
         {
             case 1:
-                cout << "Enter the element to be pushed in the stack: ";
+                cout << "Enter the element to be pushed onto the stack: ";
                 cin >> element;
                 push_element(element);
                 break;
@@ -47,7 +48,8 @@ int main(void)       //Driver function
     return 0;
 }
 
-void push_element(int element)     //Pushes an element on the top of the stack
+//Pushes an element on the top of the stack
+void push_element(int element)
 {
     if(stack_top_index < MAX_SIZE - 1)
     {
@@ -59,7 +61,8 @@ void push_element(int element)     //Pushes an element on the top of the stack
     }
 }
 
-void pop_element()      //Pops out(removes) the topmost element from the stack
+//Pops out(removes) the topmost element from the stack
+void pop_element()
 {
     if(stack_top_index >= 0)
     {
@@ -72,7 +75,8 @@ void pop_element()      //Pops out(removes) the topmost element from the stack
     }
 }
 
-void top_element()       //Prints the topmost element of the stack
+//Prints the topmost element of the stack
+void top_element()
 {
     if(stack_top_index >= 0)
     {
@@ -84,12 +88,14 @@ void top_element()       //Prints the topmost element of the stack
     }
 }
 
-void stack_size()         //Prints the current size of the stack using the pointer to the topmost element of the stack
+//Prints the current size of the stack using the pointer to the topmost element of the stack
+void stack_size()
 {
     cout << stack_top_index + 1 << "\n";
 }
 
-void print_elements()      //Prints all the elements currently present in the stack starting from the bottom of the stack
+//Prints all the elements currently present in the stack starting from the bottom of the stack
+void print_elements()
 {
     int index(0);
     if(stack_top_index >= 0)
