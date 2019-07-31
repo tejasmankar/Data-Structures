@@ -19,7 +19,13 @@ int main(void)
     int option(0), element(0);
     do
     {
-        cout << "Select an appropriate option:\n1. Push element at the top of the stack \n2. Pop element from the stack\n3. Get the top element in the stack\n4. Size of the stack\n5. Print the elements in the stack\n6. Exit\n";
+        cout << "Select an appropriate option:\n"
+        "1. Push element at the top of the stack\n"
+        "2. Pop element from the stack\n"
+        "3. Print the top element in the stack\n"
+        "4. Size of the stack\n"
+        "5. Print the elements in the stack\n"
+        "6. Exit\n";
         cin >> option;
         switch(option)
         {
@@ -43,6 +49,8 @@ int main(void)
             case 6:
                 exit(0);
                 break;
+            default:
+                cout << "You have selected an invalid option. Please select a valid option\n";
         }
     }while(option != 6);
     return 0;
@@ -88,10 +96,10 @@ void top_element()
     }
 }
 
-//Prints the current size of the stack using the pointer to the topmost element of the stack
+//Prints the number of elements currently present in the stack using the pointer to the topmost element of the stack
 void stack_size()
 {
-    cout << stack_top_index + 1 << "\n";
+    cout << "The size of the stack is " << stack_top_index + 1 << "\n";
 }
 
 //Prints all the elements currently present in the stack starting from the bottom of the stack
@@ -100,6 +108,7 @@ void print_elements()
     int index(0);
     if(stack_top_index >= 0)
     {
+        cout << "The elements in the stack are: ";
         while(index <= stack_top_index)
         {
             cout << stack_array[index++] << " ";

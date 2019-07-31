@@ -28,7 +28,14 @@ int main(void)
     int option(0), element(0);
     do
     {
-        cout << "Select an appropriate option:\n1. Insert element in the queue \n2. Remove element from the queue\n3. Get the front element of the queue\n4. Get the rear element of the queue\n5. Size of the queue\n6. Print the elements in the queue\n7. Exit\n";
+        cout << "Select an appropriate option:\n"
+        "1. Insert element in the queue\n"
+        "2. Remove element from the queue\n"
+        "3. Print the front element of the queue\n"
+        "4. Print the rear element of the queue\n"
+        "5. Size of the queue\n"
+        "6. Print the elements in the queue\n"
+        "7. Exit\n";
         cin >> option;
         switch(option)
         {
@@ -47,7 +54,7 @@ int main(void)
                 rear_element();
                 break;
             case 5:
-                cout << queue_size() << "\n";
+                cout << "The size of the queue is: " << queue_size() << "\n";
                 break;
             case 6:
                 print_elements();
@@ -55,6 +62,8 @@ int main(void)
             case 7:
                 exit(0);
                 break;
+            default:
+                cout << "You have selected an invalid option. Please select a valid option\n";
         }
     }while(option != 7);
     return 0;
@@ -93,7 +102,7 @@ void front_element()
 {
     if(queue_size())
     {
-        cout << queue_array[queue_front_index] << "\n";
+        cout << "The front element is: " << queue_array[queue_front_index] << "\n";
     }
     else
     {
@@ -106,7 +115,7 @@ void rear_element()
 {
     if(queue_size())
     {
-        cout << queue_array[(queue_rear_index + MAX_SIZE - 1) % MAX_SIZE] << "\n";
+        cout << "The rear element is: " << queue_array[(queue_rear_index + MAX_SIZE - 1) % MAX_SIZE] << "\n";
         //The rear element index is (queue_rear_index + MAX_SIZE - 1) % MAX_SIZE and not
         //queue_rear_index - 1 as the index value would be negative when queue_rear_index is 0
     }
@@ -116,7 +125,8 @@ void rear_element()
     }
 }
 
-//Returns the current size of the queue using the pointers to the front and rear elements of the queue
+//Returns the number of elements currently present in the queue using the pointers to the
+//front and rear elements of the queue
 int queue_size()
 {
     if(queue_front_index == queue_rear_index)
@@ -136,6 +146,7 @@ void print_elements()
     int index(queue_front_index), length(queue_size());
     if(length)
     {
+        cout << "The elements in the queue are: ";
         while(length--)
         {
             cout << queue_array[index] << " ";
