@@ -2,20 +2,21 @@
 #include<cstdlib>
 using namespace std;
 
-struct Node        //Structure of a node of the circular linked list
+struct Node        //Structure of a node of the doubly linked list
 {
-    int data;             //Data stored in the node
-    struct Node *next;    //Pointer to the next element in the circular linked list
+    int data;                //Data stored in the node
+    struct Node *previous;   //Pointer to the previous element in the doubly linked list
+    struct Node *next;       //Pointer to the next element in the doubly linked list
 };
 
-struct Node *last_node = nullptr;        //Pointer to the head of the linked list
-struct Node *pointer = nullptr;          //Pointer to traverse the linked list
-struct Node *temp = nullptr;             //Temporary pointer
+struct Node *head = nullptr;        //Pointer to the head of the doubly linked list
+struct Node *pointer = nullptr;     //Pointer to traverse the doubly linked list
+struct Node *temp = nullptr;        //Temporary pointer
 
-int circular_linked_list_size(0);                //Stores the current size of the circular linked list
+int doubly_linked_list_size(0);       //Stores the current size of the doubly linked list
 
 struct Node* get_pointer(int);
-struct Node* initialize_node(int, struct Node*);
+struct Node* initialize_node(int, struct Node*, struct Node*);
 void insert_begin(int);
 void insert_end(int);
 void insert_after(int,int);
@@ -70,7 +71,7 @@ int main(void)
                 print_elements();
                 break;
             case 7:
-                cout << "The size of the linked list is: " << circular_linked_list_size << "\n";
+                cout << "The size of the linked list is: " << doubly_linked_list_size << "\n";
                 break;
             case 8:
                 exit(0);
@@ -85,69 +86,68 @@ int main(void)
 //Returns a pointer to the desired element
 struct Node* get_pointer(int element)
 {
-    if(last_node != nullptr)
+    pointer = head;
+    while(pointer != nullptr)
     {
-        pointer = last_node;
-        //Used a do-while loop as a while loop would not execute even once when the circular linked list
-        //contains only a single node
-        do
+        if(pointer->data == element)
         {
-            if(pointer->data == element)
-            {
-                return pointer;
-            }
-            pointer = pointer->next;
-        }while(pointer != last_node);
+            return pointer;
+        }
+        pointer = pointer->next;
     }
     return nullptr;
 }
 
-//Returns the pointer to a newly created node after plugging in the desired values for data and next element pointer
-struct Node* initialize_node(int element, struct Node *next_pointer_value)
+//Returns the pointer to a newly created node after plugging in the desired values for
+//data, next and previous element pointer
+struct Node* initialize_node(int element, struct Node *previous_pointer_value, struct Node *next_pointer_value)
 {
     temp = new struct Node;
     temp->data = element;
+    temp->previous = previous_pointer_value;
     temp->next = next_pointer_value;
-    circular_linked_list_size++;                 //Increments the size of the linked list by 1
+    doubly_linked_list_size++;
     return temp;
 }
 
-//Inserts an element at the beginning of the circular linked list
+//Inserts an element at the beginning of the doubly linked list
 void insert_begin(int element)
 {
-    if(last_node == nullptr)
+    if(head == nullptr)
     {
-        last_node = initialize_node(element, nullptr);
-        last_node->next = last_node;
+        head = initialize_node(element, nullptr, nullptr);
     }
     else
     {
-        temp = initialize_node(element, last_node->next);
-        last_node->next = temp;
+        temp = initialize_node(element, nullptr, head);
+        head->previous = temp;
+        head = temp;
     }
 }
 
-//Inserts an element at the end of the circular linked list
+//Inserts an element at the end of the doubly linked list
 void insert_end(int element)
 {
-    if(last_node == nullptr)
+    if(head == nullptr)
     {
-        last_node = initialize_node(element, nullptr);
-        last_node->next = last_node;
+        head = initialize_node(element, nullptr, nullptr);
     }
     else
     {
-        temp = initialize_node(element, last_node->next);
-        last_node->next = temp;
-        //Update last_node to point it to the newly added last node of the circular linked list
-        last_node = last_node->next;
+        pointer = head;
+        while(pointer->next != nullptr)
+        {
+            pointer = pointer->next;
+        }
+        temp = initialize_node(element, pointer, nullptr);
+        pointer->next = temp;
     }
 }
 
 //Inserts an element after any particular element
 void insert_after(int element, int previous_element)
 {
-    if(last_node == nullptr)
+    if(head == nullptr)
     {
         cout << "Linked list is empty\n";
     }
@@ -161,81 +161,104 @@ void insert_after(int element, int previous_element)
         }
         else
         {
-            temp = initialize_node(element, pointer->next);
+            temp = initialize_node(element, pointer, pointer->next);
+            if(pointer->next != nullptr)
+            {
+                //The following line of code will not execute if the element is being added
+                //at the end of the doubly linked list
+                (pointer->next)->previous = temp;
+            }
             pointer->next = temp;
         }
     }
 }
 
-//Removes an element from the circular linked list
+//Removes an element from the doubly linked list
 void remove_element(int element)
 {
-    if(!circular_linked_list_size)
+    if(!doubly_linked_list_size)
     {
         cout << "Linked list is empty\n";
     }
+    else if(element == head->data)
+    {
+        //When the element to be deleted is present at the head of the doubly linked list
+        temp = head;
+        head = head->next;
+        //The following code block will execute only when the linked list is not empty after the
+        //removal of the element pointed by head
+        if(head != nullptr)
+        {
+            head->previous = nullptr;
+        }
+        free(temp);
+        doubly_linked_list_size--;
+    }
     else
     {
-        pointer = get_pointer(element);
+        //The following code block finds the pointer to the element present just before the element to
+        //be deleted and updates its next element pointer to point to the element following the element
+        //to be deleted
+        pointer = head;
+        struct Node *previous_element_pointer = nullptr;
+        while((pointer->data != element) && (pointer != nullptr))
+        {
+            previous_element_pointer = pointer;
+            pointer = pointer->next;
+        }
         if(pointer == nullptr)
         {
             cout << "The element is not present in the linked list\n";
         }
         else
         {
-            //The following code block finds the pointer to the element present just before the element to
-            //be deleted and updates its next element pointer to point to the element following the element
-            //to be deleted
-            struct Node *previous_element_pointer = last_node;
-            do
-            {
-                previous_element_pointer = previous_element_pointer->next;
-            }while(previous_element_pointer->next != pointer);
             previous_element_pointer->next = pointer->next;
-            if(pointer == last_node)
+            if(pointer->next != nullptr)
             {
-                //Update the last_node pointer if the last node holds the element to be deleted
-                last_node = previous_element_pointer;
+                (pointer->next)->previous = previous_element_pointer;
+                //(pointer->next)->previous = pointer->previous is also acceptable
             }
             free(pointer);
-            circular_linked_list_size--;
+            doubly_linked_list_size--;
         }
     }
 }
 
-//Prints the first and last elements of the circular linked list
+//Prints the elements present at the head and tail of the doubly linked list
 void print_first_and_last_elements()
 {
-    if(!circular_linked_list_size)
+    if(!doubly_linked_list_size)
     {
         cout << "Linked list is empty\n";
     }
     else
     {
-        //temp here holds the pointer to the first node in the circular linked list,
-        //which is the node following the last node
-        temp = last_node->next;
-        cout << "The first element is: " << temp->data << "\n";
-        cout << "The last element is: " << last_node->data << "\n";
+        cout << "The first element is: " << head->data << "\n";
+        pointer = head;
+        while(pointer->next != nullptr)
+        {
+            pointer = pointer->next;
+        }
+        cout << "The last element is: " << pointer->data << "\n";
     }
 }
 
-//Prints all the elements present in the circular linked list starting from the last node
+//Prints all the elements present in the doubly linked list
 void print_elements()
 {
-    if(!circular_linked_list_size)
+    if(!doubly_linked_list_size)
     {
         cout << "Linked list is empty\n";
     }
     else
     {
         cout << "The elements in the linked list are: ";
-        pointer = last_node;
-        do
+        pointer = head;
+        while(pointer != nullptr)
         {
             cout << pointer->data << " ";
             pointer = pointer->next;
-        }while(pointer != last_node);
+        }
         cout << "\n";
     }
 }
