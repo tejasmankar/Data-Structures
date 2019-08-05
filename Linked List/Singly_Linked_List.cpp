@@ -115,6 +115,7 @@ void insert_begin(int element)
     else
     {
         temp = initialize_node(element, head);
+        //Update head pointer to point to the newly added first node
         head = temp;
     }
 }
@@ -134,6 +135,7 @@ void insert_end(int element)
             pointer = pointer->next;
         }
         temp = initialize_node(element, nullptr);
+        //Update the next section of the previous last node to point to the newly added last node
         pointer->next = temp;
     }
 }
@@ -156,6 +158,7 @@ void insert_after(int element, int previous_element)
         else
         {
             temp = initialize_node(element, pointer->next);
+            //Update the next section of the previous element to point to the newly added node
             pointer->next = temp;
         }
     }
@@ -172,11 +175,14 @@ void remove_element(int element)
     {
         //When the element to be deleted is present at the head of the linked list
         temp = head;
+        //Update the head pointer to point to the new head node which is the one following the
+        //previous head node
         head = head->next;
         free(temp);
     }
     else
     {
+        //Get the pointer pointing to the element to be deleted
         pointer = get_pointer(element);
         if(pointer == nullptr)
         {
@@ -192,6 +198,8 @@ void remove_element(int element)
             {
                 previous_element_pointer = previous_element_pointer->next;
             }
+            //Update the next section of the previous element to point to the element following
+            //the element to be removed
             previous_element_pointer->next = pointer->next;
             free(pointer);
         }

@@ -106,6 +106,7 @@ struct Node* initialize_node(int element, struct Node *previous_pointer_value, s
     temp->data = element;
     temp->previous = previous_pointer_value;
     temp->next = next_pointer_value;
+    //Increment the size of the linked list by 1
     doubly_linked_list_size++;
     return temp;
 }
@@ -121,6 +122,7 @@ void insert_begin(int element)
     {
         temp = initialize_node(element, nullptr, head);
         head->previous = temp;
+        //Update head pointer to point to the newly added first node
         head = temp;
     }
 }
@@ -140,6 +142,7 @@ void insert_end(int element)
             pointer = pointer->next;
         }
         temp = initialize_node(element, pointer, nullptr);
+        //Update the next section of the previous last node to point to the newly added last node
         pointer->next = temp;
     }
 }
@@ -168,6 +171,7 @@ void insert_after(int element, int previous_element)
                 //at the end of the doubly linked list
                 (pointer->next)->previous = temp;
             }
+            //Update the next section of the previous element to point to the newly added node
             pointer->next = temp;
         }
     }
@@ -182,7 +186,7 @@ void remove_element(int element)
     }
     else if(element == head->data)
     {
-        //When the element to be deleted is present at the head of the doubly linked list
+        //The element to be deleted is present at the head of the doubly linked list
         temp = head;
         head = head->next;
         //The following code block will execute only when the linked list is not empty after the
@@ -192,6 +196,7 @@ void remove_element(int element)
             head->previous = nullptr;
         }
         free(temp);
+        //Decrement the size of the doubly linked list by 1
         doubly_linked_list_size--;
     }
     else
@@ -212,13 +217,18 @@ void remove_element(int element)
         }
         else
         {
+            //Update the next section of the previous element to point to the element following
+            //the element to be removed
             previous_element_pointer->next = pointer->next;
             if(pointer->next != nullptr)
             {
+                //The following line of code will not execute if the element being removed
+                //is at the end(tail) of the doubly linked list
                 (pointer->next)->previous = previous_element_pointer;
                 //(pointer->next)->previous = pointer->previous is also acceptable
             }
             free(pointer);
+            //Decrement the size of the doubly linked list by 1
             doubly_linked_list_size--;
         }
     }

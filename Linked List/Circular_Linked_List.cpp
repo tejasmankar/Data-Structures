@@ -108,7 +108,8 @@ struct Node* initialize_node(int element, struct Node *next_pointer_value)
     temp = new struct Node;
     temp->data = element;
     temp->next = next_pointer_value;
-    circular_linked_list_size++;                 //Increments the size of the linked list by 1
+    //Increment the size of the circular linked list by 1
+    circular_linked_list_size++;
     return temp;
 }
 
@@ -118,6 +119,7 @@ void insert_begin(int element)
     if(last_node == nullptr)
     {
         last_node = initialize_node(element, nullptr);
+        //The next section of a single node points to itself
         last_node->next = last_node;
     }
     else
@@ -133,11 +135,14 @@ void insert_end(int element)
     if(last_node == nullptr)
     {
         last_node = initialize_node(element, nullptr);
+        //The next section of a single node points to itself
         last_node->next = last_node;
     }
     else
     {
         temp = initialize_node(element, last_node->next);
+        //Update the next section of the element pointed by last_node to point to the
+        //newly added last node
         last_node->next = temp;
         //Update last_node to point it to the newly added last node of the circular linked list
         last_node = last_node->next;
@@ -162,6 +167,7 @@ void insert_after(int element, int previous_element)
         else
         {
             temp = initialize_node(element, pointer->next);
+            //Update the next section of the previous element to point to the newly added node
             pointer->next = temp;
         }
     }
@@ -176,6 +182,7 @@ void remove_element(int element)
     }
     else
     {
+        //Get the pointer pointing to the element to be deleted
         pointer = get_pointer(element);
         if(pointer == nullptr)
         {
@@ -191,13 +198,16 @@ void remove_element(int element)
             {
                 previous_element_pointer = previous_element_pointer->next;
             }while(previous_element_pointer->next != pointer);
+            //Update the next section of the previous element to point to the element following
+            //the element to be removed
             previous_element_pointer->next = pointer->next;
             if(pointer == last_node)
             {
-                //Update the last_node pointer if the last node holds the element to be deleted
+                //Update the last_node pointer if the last node points to the element to be deleted
                 last_node = previous_element_pointer;
             }
             free(pointer);
+            //Decrement the size of the circular linked list by 1
             circular_linked_list_size--;
         }
     }
