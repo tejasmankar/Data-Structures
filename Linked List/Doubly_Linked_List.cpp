@@ -106,8 +106,10 @@ struct Node* initialize_node(int element, struct Node *previous_pointer_value, s
     temp->data = element;
     temp->previous = previous_pointer_value;
     temp->next = next_pointer_value;
+
     //Increment the size of the linked list by 1
     doubly_linked_list_size++;
+
     return temp;
 }
 
@@ -122,6 +124,7 @@ void insert_begin(int element)
     {
         temp = initialize_node(element, nullptr, head);
         head->previous = temp;
+
         //Update head pointer to point to the newly added first node
         head = temp;
     }
@@ -142,6 +145,7 @@ void insert_end(int element)
             pointer = pointer->next;
         }
         temp = initialize_node(element, pointer, nullptr);
+
         //Update the next section of the previous last node to point to the newly added last node
         pointer->next = temp;
     }
@@ -158,6 +162,7 @@ void insert_after(int element, int previous_element)
     {
         //Getting the pointer of the element after which the new element is to be inserted
         pointer = get_pointer(previous_element);
+
         if(!pointer)
         {
             cout << "The selected element is not present in the linked list\n";
@@ -171,6 +176,7 @@ void insert_after(int element, int previous_element)
                 //at the end of the doubly linked list
                 (pointer->next)->previous = temp;
             }
+
             //Update the next section of the previous element to point to the newly added node
             pointer->next = temp;
         }
@@ -189,6 +195,7 @@ void remove_element(int element)
         //The element to be deleted is present at the head of the doubly linked list
         temp = head;
         head = head->next;
+
         //The following code block will execute only when the linked list is not empty after the
         //removal of the element pointed by head
         if(head != nullptr)
@@ -196,6 +203,7 @@ void remove_element(int element)
             head->previous = nullptr;
         }
         free(temp);
+
         //Decrement the size of the doubly linked list by 1
         doubly_linked_list_size--;
     }
@@ -228,6 +236,7 @@ void remove_element(int element)
                 //(pointer->next)->previous = pointer->previous is also acceptable
             }
             free(pointer);
+
             //Decrement the size of the doubly linked list by 1
             doubly_linked_list_size--;
         }
