@@ -16,14 +16,12 @@ struct Node        //Structure of a node of the linked list
 struct Node *pointer = nullptr;     //Pointer to traverse the linked list
 struct Node *temp = nullptr;        //Temporary pointer
 
-//Initializing the hash table, all array elements initially point to nullptr
-struct Node* hash_table[MAX_SIZE] = {nullptr};
-//When the hash table elements are added, these array elements will point to the heads of the linked lists
-//which contain the keys that are mapped to the same hash value, which will be equal to the corresponding
-//array index
+//Array used to represent the hash table
+struct Node* hash_table[MAX_SIZE];
 
-int element_count(0);     //Stores the number of elements or keys currently present in the hash table
+int key_count(0);     //Stores the number of elements or keys currently present in the hash table
 
+void initialize_hash_table();
 struct Node* initialize_node(int, struct Node*, struct Node*);
 int compute_hash_value(int);
 void insert_key(int);
@@ -36,6 +34,7 @@ void print_keys();
 int main(void)
 {
     int option(0), element_key(0), hash_value(0);
+    initialize_hash_table();
     do
     {
         cout << "Select an appropriate option:\n"
@@ -43,9 +42,10 @@ int main(void)
              "2. Remove a key from the hash table\n"
              "3. Remove all keys having a particular hash value\n"
              "4. Print all the keys having a particular hash value\n"
-             "5. Print all the keys in the hash table\n"
-             "6. Load factor of the hash table\n"
-             "7. Exit\n";
+             "5. Print all the keys present in the hash table\n"
+             "6. Number of keys currently present in the hash table\n"
+             "7. Load factor of the hash table\n"
+             "8. Exit\n";
         cin >> option;
         switch(option)
         {
@@ -80,16 +80,32 @@ int main(void)
                 print_keys();
                 break;
             case 6:
-                cout << "The load factor of the hash table is: " << (double)element_count / MAX_SIZE << "\n";
+                cout << "The number of keys currently present in the hash table is " << key_count << "\n";
                 break;
             case 7:
+                cout << "The load factor of the hash table is: " << (double)key_count / MAX_SIZE << "\n";
+                break;
+            case 8:
                 exit(0);
                 break;
             default:
                 cout << "You have selected an invalid option. Please select a valid option\n";
         }
-    }while(option != 7);
+    }while(option != 8);
     return 0;
+}
+
+//Initializes all the locations in the hash table
+void initialize_hash_table()
+{
+    //Initially, all the locations point to nullptr
+    for(int index = 0; index < MAX_SIZE; index++)
+    {
+        hash_table[index] = nullptr;
+    }
+    //When the hash table elements are added, these array elements will point to the heads of the linked lists
+    //which contain the keys that are mapped to the same hash value, which will be equal to the corresponding
+    //array index
 }
 
 //Returns the pointer to a newly created node after plugging in the desired values for data and next element pointer
@@ -99,8 +115,8 @@ struct Node* initialize_node(int element_key, struct Node *next_pointer_value)
     temp->key = element_key;
     temp->next = next_pointer_value;
 
-    //Increment the number of elements in the hash table by 1
-    element_count++;
+    //Increment the number of keys in the hash table by 1
+    key_count++;
 
     return temp;
 }
@@ -157,8 +173,8 @@ void remove_key(int element_key)
             hash_table[hash_value] = pointer->next;
             free(pointer);
 
-            //Decrement the number of elements in the hash table by 1
-            element_count--;
+            //Decrement the number of keys in the hash table by 1
+            key_count--;
         }
         else
         {
@@ -167,8 +183,8 @@ void remove_key(int element_key)
             previous_element_pointer->next = pointer->next;
             free(pointer);
 
-            //Decrement the number of elements in the hash table by 1
-            element_count--;
+            //Decrement the number of keys in the hash table by 1
+            key_count--;
         }
     }
 }
@@ -198,8 +214,8 @@ void remove_keys_with_hash_value(int hash_value)
                 temp = pointer->next;
                 free(pointer);
 
-                //Decrement the number of elements in the hash table by 1
-                element_count--;
+                //Decrement the number of keys in the hash table by 1
+                key_count--;
 
                 pointer = temp;
             }
