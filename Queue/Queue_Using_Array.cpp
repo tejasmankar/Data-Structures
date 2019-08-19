@@ -2,11 +2,17 @@
 #include<cstdlib>
 using namespace std;
 
-#define MAX_SIZE 5        //Defines the maximum number of elements which the queue can hold
+//Defines the maximum number of elements which the queue can hold
+#define MAX_SIZE 5
 
-int queue_array[MAX_SIZE];   //Array which will be used to implement the queue
-int queue_front_index(0);    //Pointer to the front element of the queue
-int queue_rear_index(0);     //Pointer to the location following the rear element of the queue
+//Array used to represent the queue
+int queue_array[MAX_SIZE];
+
+//Pointer to the front element of the queue
+int queue_front_index(0);
+
+//Pointer to the location following the rear element of the queue
+int queue_rear_index(0);
 
 //In this queue, we will insert elements at the front of the array if there is space after removal of some elements
 //and no element can be added at the end of the array.
