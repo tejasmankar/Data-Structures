@@ -2,10 +2,14 @@
 #include<cstdlib>
 using namespace std;
 
-#define MAX_SIZE 100        //Defines the maximum number of elements which the stack can hold
+//Defines the maximum number of elements which the stack can hold
+#define MAX_SIZE 100
 
-int stack_array[MAX_SIZE];    //Array which will be used to implement the stack
-int stack_top_index(-1);      //Pointer to the topmost element of the stack
+//Array used to represent the stack
+int stack_array[MAX_SIZE];
+
+//Pointer to the topmost element of the stack
+int stack_top_index(-1);
 
 void push_element(int);
 void pop_element();
