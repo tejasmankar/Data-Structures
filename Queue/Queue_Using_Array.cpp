@@ -75,7 +75,7 @@ int main(void)
     return 0;
 }
 
-//Inserts the element at the end of the queue
+//Inserts the given element at the end of the queue
 void enqueue(int element)
 {
     if((queue_rear_index + 1) % MAX_SIZE != queue_front_index)

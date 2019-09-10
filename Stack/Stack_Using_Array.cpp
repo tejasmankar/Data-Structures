@@ -60,7 +60,7 @@ int main(void)
     return 0;
 }
 
-//Pushes an element on the top of the stack
+//Pushes the given element on the top of the stack
 void push_element(int element)
 {
     if(stack_top_index < MAX_SIZE - 1)

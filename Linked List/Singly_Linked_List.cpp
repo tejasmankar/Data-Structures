@@ -2,15 +2,21 @@
 #include<cstdlib>
 using namespace std;
 
-struct Node        //Structure of a node of the linked list
+//Structure of a node of the singly linked list
+struct Node
 {
     int data;             //Data stored in the node
-    struct Node *next;    //Pointer to the next element in the linked list
+    struct Node *next;    //Pointer to the next element in the singly linked list
 };
 
-struct Node *head = nullptr;        //Pointer to the head of the linked list
-struct Node *pointer = nullptr;     //Pointer to traverse the linked list
-struct Node *temp = nullptr;        //Temporary pointer
+//Pointer to the head of the singly linked list
+struct Node *head = nullptr;
+
+//Pointer to traverse the singly linked list
+struct Node *pointer = nullptr;
+
+//Temporary pointer
+struct Node *temp = nullptr;
 
 struct Node* get_pointer(int);
 struct Node* initialize_node(int, struct Node*);
@@ -105,7 +111,7 @@ struct Node* initialize_node(int element, struct Node *next_pointer_value)
     return temp;
 }
 
-//Inserts an element at the beginning of the linked list
+//Inserts the given element at the beginning of the singly linked list
 void insert_begin(int element)
 {
     if(head == nullptr)
@@ -121,7 +127,7 @@ void insert_begin(int element)
     }
 }
 
-//Inserts an element at the end of the linked list
+//Inserts the given element at the end of the singly linked list
 void insert_end(int element)
 {
     if(head == nullptr)
@@ -142,7 +148,7 @@ void insert_end(int element)
     }
 }
 
-//Inserts an element after any particular element
+//Inserts the given element after any desired element
 void insert_after(int element, int previous_element)
 {
     if(head == nullptr)
@@ -167,7 +173,7 @@ void insert_after(int element, int previous_element)
     }
 }
 
-//Removes an element from the linked list
+//Removes the given element from the singly linked list
 void remove_element(int element)
 {
     if(!linked_list_size())
@@ -211,7 +217,7 @@ void remove_element(int element)
     }
 }
 
-//Prints the elements present at the head and tail of the linked list
+//Prints the elements present at the head and tail of the singly linked list
 void print_first_and_last_elements()
 {
     if(!linked_list_size())
@@ -230,7 +236,7 @@ void print_first_and_last_elements()
     }
 }
 
-//Prints all the elements present in the linked list
+//Prints all the elements present in the singly linked list
 void print_elements()
 {
     if(!linked_list_size())
@@ -250,7 +256,7 @@ void print_elements()
     }
 }
 
-//Returns the number of elements currently present in the linked list
+//Returns the number of elements currently present in the singly linked list
 int linked_list_size()
 {
     int counter(0);

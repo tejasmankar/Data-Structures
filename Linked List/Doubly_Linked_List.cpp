@@ -9,11 +9,17 @@ struct Node        //Structure of a node of the doubly linked list
     struct Node *next;       //Pointer to the next element in the doubly linked list
 };
 
-struct Node *head = nullptr;        //Pointer to the head of the doubly linked list
-struct Node *pointer = nullptr;     //Pointer to traverse the doubly linked list
-struct Node *temp = nullptr;        //Temporary pointer
+//Pointer to the head of the doubly linked list
+struct Node *head = nullptr;
 
-int doubly_linked_list_size(0);       //Stores the current size of the doubly linked list
+//Pointer to traverse the doubly linked list
+struct Node *pointer = nullptr;
+
+//Temporary pointer
+struct Node *temp = nullptr;
+
+//Stores the current size of the doubly linked list
+int doubly_linked_list_size(0);
 
 struct Node* get_pointer(int);
 struct Node* initialize_node(int, struct Node*, struct Node*);
@@ -113,7 +119,7 @@ struct Node* initialize_node(int element, struct Node *previous_pointer_value, s
     return temp;
 }
 
-//Inserts an element at the beginning of the doubly linked list
+//Inserts the given element at the beginning of the doubly linked list
 void insert_begin(int element)
 {
     if(head == nullptr)
@@ -130,7 +136,7 @@ void insert_begin(int element)
     }
 }
 
-//Inserts an element at the end of the doubly linked list
+//Inserts the given element at the end of the doubly linked list
 void insert_end(int element)
 {
     if(head == nullptr)
@@ -151,7 +157,7 @@ void insert_end(int element)
     }
 }
 
-//Inserts an element after any particular element
+//Inserts the given element after any desired element
 void insert_after(int element, int previous_element)
 {
     if(head == nullptr)
@@ -183,7 +189,7 @@ void insert_after(int element, int previous_element)
     }
 }
 
-//Removes an element from the doubly linked list
+//Removes the given element from the doubly linked list
 void remove_element(int element)
 {
     if(!doubly_linked_list_size)

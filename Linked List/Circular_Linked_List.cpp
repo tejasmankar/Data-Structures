@@ -2,17 +2,24 @@
 #include<cstdlib>
 using namespace std;
 
-struct Node        //Structure of a node of the circular linked list
+//Structure of a node of the circular linked list
+struct Node
 {
     int data;             //Data stored in the node
     struct Node *next;    //Pointer to the next element in the circular linked list
 };
 
-struct Node *last_node = nullptr;        //Pointer to the head of the linked list
-struct Node *pointer = nullptr;          //Pointer to traverse the linked list
-struct Node *temp = nullptr;             //Temporary pointer
+//Pointer to the head of the circular linked list
+struct Node *last_node = nullptr;
 
-int circular_linked_list_size(0);                //Stores the current size of the circular linked list
+//Pointer to traverse the circular linked list
+struct Node *pointer = nullptr;
+
+//Temporary pointer
+struct Node *temp = nullptr;
+
+//Stores the current size of the circular linked list
+int circular_linked_list_size(0);
 
 struct Node* get_pointer(int);
 struct Node* initialize_node(int, struct Node*);

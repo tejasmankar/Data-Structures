@@ -11,7 +11,8 @@ using namespace std;
 //Array used to represent the hash table
 int hash_table[MAX_SIZE];
 
-int key_count(0);     //Stores the number of elements or keys currently present in the hash table
+//Stores the number of elements or keys currently present in the hash table
+int key_count(0);
 
 void initialize_hash_table();
 int compute_initial_hash_value(int);
@@ -30,7 +31,7 @@ int main(void)
     do
     {
         cout << "Select an appropriate option:\n"
-             "1. Insert new key in the hash table\n"
+             "1. Insert a new key in the hash table\n"
              "2. Remove a key from the hash table\n"
              "3. Search a key in the hash table\n"
              "4. Print all the keys present in the hash table\n"

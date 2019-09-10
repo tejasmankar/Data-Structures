@@ -13,13 +13,17 @@ struct Node        //Structure of a node of the linked list
     struct Node *next;    //Pointer to the next element in the linked list
 };
 
-struct Node *pointer = nullptr;     //Pointer to traverse the linked list
-struct Node *temp = nullptr;        //Temporary pointer
+//Pointer to traverse the linked list
+struct Node *pointer = nullptr;
+
+//Temporary pointer
+struct Node *temp = nullptr;
 
 //Array used to represent the hash table
 struct Node* hash_table[MAX_SIZE];
 
-int key_count(0);     //Stores the number of elements or keys currently present in the hash table
+//Stores the number of elements or keys currently present in the hash table
+int key_count(0);
 
 void initialize_hash_table();
 struct Node* initialize_node(int, struct Node*, struct Node*);
@@ -38,7 +42,7 @@ int main(void)
     do
     {
         cout << "Select an appropriate option:\n"
-             "1. Insert new key in the hash table\n"
+             "1. Insert a new key in the hash table\n"
              "2. Remove a key from the hash table\n"
              "3. Remove all keys having a particular hash value\n"
              "4. Print all the keys having a particular hash value\n"
