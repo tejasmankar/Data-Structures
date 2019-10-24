@@ -217,7 +217,6 @@ void insert_key(int element_key)
     {
         //Search function is called so as to get the new_key_parent point to the
         //parent of the new key to be inserted
-        //dont use search function. due to this, 1,3,4 are insetted as 1-3-4 and not 1-4-3
         temp = search_key(element_key, root);
         //The only time the search_key function won't return null value while inserting a node is
         //when the BST already contains a node having the same key value as the one to be inserted
