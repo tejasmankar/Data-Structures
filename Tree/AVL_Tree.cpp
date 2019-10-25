@@ -232,14 +232,14 @@ void ancestor_rebalance(struct Node *removed_node, void (*height_balancer)(struc
 
             //Rebalance the nodes if a height imbalanced ancestor is present
             (*height_balancer)(pointer, removed_node->key);
+
             if(balanced_ancestor)
             {
                 //Recursively check for height imbalance of the ancestors if the height of the appropriate
                 //child of the first unbalanced ancestor's parent decreases
                 if((balanced_ancestor->left_child == pointer ? balanced_ancestor->left_child->height : balanced_ancestor->right_child->height) < first_unbalanced_ancestor_original_height)
                 {
-                    pointer = pointer->parent;
-                    ancestor_rebalance(pointer, height_balancer);
+                    ancestor_rebalance(balanced_ancestor, height_balancer);
                 }
             }
 
@@ -252,6 +252,8 @@ void height_balancer_insert(struct Node *unbalanced_node, int element_key)
 {
     struct Node *unbalanced_node_child = nullptr;
     struct Node *unbalanced_node_grandchild = nullptr;
+
+    //Sets the pointers to the appropriate child and grandchild of the unbalanced node
     if(element_key <= unbalanced_node->key)
     {
         unbalanced_node_child = unbalanced_node->left_child;
@@ -278,6 +280,8 @@ void height_balancer_remove(struct Node *unbalanced_node, int element_key)
 {
     struct Node *unbalanced_node_child = nullptr;
     struct Node *unbalanced_node_grandchild = nullptr;
+
+    //Sets the pointers to the appropriate child and grandchild of the unbalanced node
     if(!unbalanced_node->left_child)
     {
         unbalanced_node_child = unbalanced_node->right_child;
@@ -337,22 +341,26 @@ void height_balancer_remove(struct Node *unbalanced_node, int element_key)
 //Selects the direction in which to rotate the given nodes to maintain height balance in the AVL tree
 void select_rotation_direction(struct Node *unbalanced_node, struct Node *unbalanced_node_child, struct Node *unbalanced_node_grandchild)
 {
+    //Left-Left case
     if((unbalanced_node->left_child == unbalanced_node_child) && (unbalanced_node_child->left_child == unbalanced_node_grandchild))
     {
         rotate_left(unbalanced_node, unbalanced_node_child);
     }
+    //Left-Right case
     else if((unbalanced_node->left_child == unbalanced_node_child) && (unbalanced_node_child->right_child == unbalanced_node_grandchild))
     {
         rotate_right(unbalanced_node_child, unbalanced_node_grandchild);
         unbalanced_node_child = unbalanced_node_grandchild;
         rotate_left(unbalanced_node, unbalanced_node_child);
     }
+    //Right-Left case
     else if((unbalanced_node->right_child == unbalanced_node_child) && (unbalanced_node_child->left_child == unbalanced_node_grandchild))
     {
         rotate_left(unbalanced_node_child, unbalanced_node_grandchild);
         unbalanced_node_child = unbalanced_node_grandchild;
         rotate_right(unbalanced_node, unbalanced_node_child);
     }
+    //Right-Right case
     else if((unbalanced_node->right_child == unbalanced_node_child) && (unbalanced_node_child->right_child == unbalanced_node_grandchild))
     {
         rotate_right(unbalanced_node, unbalanced_node_child);
