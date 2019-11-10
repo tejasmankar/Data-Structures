@@ -123,17 +123,17 @@ int main(void)
 //key, parent, left_child and right_child pointer
 struct Node* initialize_node(int element_key, struct Node *parent, struct Node *left_child, struct Node *right_child)
 {
-    temp = new struct Node;
-    temp->key = element_key;
-    temp->height = 1;
-    temp->parent = parent;
-    temp->left_child = left_child;
-    temp->right_child = right_child;
+    struct Node *new_node = new struct Node;
+    new_node->key = element_key;
+    new_node->height = 1;
+    new_node->parent = parent;
+    new_node->left_child = left_child;
+    new_node->right_child = right_child;
 
     //Increment the number of keys in the AVL tree by 1
     key_count++;
 
-    return temp;
+    return new_node;
 }
 
 //Sets the height of each node of the tree having the given node as root
@@ -152,7 +152,7 @@ void set_height(struct Node *pointer)
         pointer->height = max(pointer->left_child->height, pointer->right_child->height) + 1;
     }
     //If the given node has only one child, then the height of the given node is 1 + height of child
-    else //if(((pointer->left_child) && (!pointer->right_child)) || (((!pointer->left_child) && (pointer->right_child))))
+    else
     {
         struct Node *child_pointer = (pointer->left_child == nullptr) ? (pointer->right_child) : (pointer->left_child);
         set_height(child_pointer);

@@ -193,16 +193,16 @@ int main(void)
 //key, parent, left_child and right_child pointer
 struct Node* initialize_node(int element_key, struct Node *parent, struct Node *left_child, struct Node *right_child)
 {
-    temp = new struct Node;
-    temp->key = element_key;
-    temp->parent = parent;
-    temp->left_child = left_child;
-    temp->right_child = right_child;
+    struct Node *new_node = new struct Node;
+    new_node->key = element_key;
+    new_node->parent = parent;
+    new_node->left_child = left_child;
+    new_node->right_child = right_child;
 
     //Increment the number of keys in the BST by 1
     key_count++;
 
-    return temp;
+    return new_node;
 }
 
 //Inserts the given key in the BST
