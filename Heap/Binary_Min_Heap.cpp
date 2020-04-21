@@ -161,8 +161,24 @@ void insert_priority_value(int priority_value)
         }
     }
 }
+//Recursive version of insert_priority_value
+/*void insert_priority_value(int priority_value, int new_priority_value_index)
+{
+    //In this case, the element should be inserted in the heap_array before calling this function. The job of this
+    //function would then be to place the newly inserted priority value in its proper place. Initially, priority_value_index
+    //would be equal to heap_array.size() - 1
+    if(new_priority_value_index <= 0)
+    {
+        return;
+    }
+    else if((new_priority_value_index >= 1) && (heap_array[new_priority_value_index] < heap_array[(new_priority_value_index - 1) / 2]))
+    {
+        swap(heap_array[new_priority_value_index], heap_array[(new_priority_value_index - 1) / 2]);
+        insert_priority_value(priority_value, (new_priority_value_index - 1) / 2);
+    }
+}*/
 
-//removes the minimum priority value from the binary heap
+//Removes the minimum priority value from the binary heap
 void remove_minimum_priority_value()
 {
     //Replace the minimum priority value with the last priority value in the heap_array(Typically, its a swap)
