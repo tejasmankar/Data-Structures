@@ -2,6 +2,8 @@
 #include<cstdlib>
 using namespace std;
 
+//Program to implement a queue using array
+
 //Defines the maximum number of elements which the queue can hold
 #define MAX_SIZE 5
 
