@@ -2,6 +2,8 @@
 #include<cstdlib>
 using namespace std;
 
+//Program to implement a stack using array
+
 //Defines the maximum number of elements which the stack can hold
 #define MAX_SIZE 100
 
