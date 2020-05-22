@@ -123,9 +123,11 @@ void rear_element()
 {
     if(queue_size())
     {
+        //The rear element index is (queue_rear_index + MAX_SIZE - 1) % MAX_SIZE and not queue_rear_index - 1
+        //as the index value would be negative when queue_rear_index is 0. This is to ensure that we get the
+        //proper rear element after we insert elements in the front(index 0 onwards) of the array after we have
+        //removed some elements from the front of a completely filled queue
         cout << "The rear element is: " << queue_array[(queue_rear_index + MAX_SIZE - 1) % MAX_SIZE] << "\n";
-        //The rear element index is (queue_rear_index + MAX_SIZE - 1) % MAX_SIZE and not
-        //queue_rear_index - 1 as the index value would be negative when queue_rear_index is 0
     }
     else
     {
