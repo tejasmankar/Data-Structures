@@ -553,7 +553,7 @@ struct Node* first_left_ancestor(struct Node *pointer)
     //Else, move up the tree in search of the desired ancestor
     else
     {
-        ancestor = first_left_ancestor(ancestor);
+        return first_left_ancestor(ancestor);
     }
 }
 
